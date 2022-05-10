@@ -12,11 +12,26 @@ mkdir -p "${DIRECTORY}/${TODAY_DATE}"
 
 FINAL_DIRECTORY="${DIRECTORY}/${TODAY_DATE}"
 
+# Get the day of the week
+
+DAY=$(date +%u)
+
 # Get the site info
-IP="192.168.153.142"
+WEBSITE="http://www.africau.edu/images/default/sample.pdf"
 
-# Fetch the file from the site
+# Fetch the file from the site using certain conditions
 
-wget -P "${FINAL_DIRECTORY}" "http://${IP}:8000/${TODAY_DATE}/script-${TODAY_DATE}.tar.gz"
+if [[ ! -f "${FINAL_DIRECTORY}/${TODAY_DATE}.zip" ]]
+then
+    curl --silent ${WEBSITE} -o "${FINAL_DIRECTORY}"/${TODAY_DATE}.zip 
 
-wget -P "${FINAL_DIRECTORY}" "http://${IP}:8000/${TODAY_DATE}/backup-${TODAY_DATE}.tar.gz"
+    # curl "${WEBSITE}/${TODAY_DATE}" -o "${FINAL_DIRECTORY}"/${TODAY_DATE}.zip
+fi
+
+if [[ "${DAY}" -eq 2 ]] && [[ ! -f "${FINAL_DIRECTORY}"/${TODAY_DATE}-second.zip ]]
+then
+    curl --silent ${WEBSITE} -o "${FINAL_DIRECTORY}"/${TODAY_DATE}-second.zip  
+
+    # curl "${WEBSITE}/${TODAY_DATE}" -o "${FINAL_DIRECTORY}"/${TODAY_DATE}.zip
+fi
+
