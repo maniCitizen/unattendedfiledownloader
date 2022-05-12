@@ -2,7 +2,8 @@
 
 # Get the working directory for the project
 
-DIRECTORY="/home/tamila/Projects/wgetfilefetcher/files"
+HOME=$HOME
+DIRECTORY="${HOME}/Projects/wgetfilefetcher/files"
 
 #Make the directory with today's date
 
@@ -12,25 +13,32 @@ mkdir -p "${DIRECTORY}/${TODAY_DATE}"
 
 FINAL_DIRECTORY="${DIRECTORY}/${TODAY_DATE}"
 
-# Get the day of the week
+# Get the day of the week and current time
 
 DAY=$(date +%u)
+TIME=$(date +%H-%M)
+
+# File names to be present
+FILE_NAME1="dummy1"
+FILE_NAME2="dummy2"
 
 # Get the site info
-WEBSITE="http://www.africau.edu/images/default/sample.pdf"
+WEBSITE1="http://www.pdf995.com/samples/pdf.pdf"
+WEBSITE2="http://www.africau.edu/images/default/sample.pdf"
+
 
 # Fetch the file from the site using certain conditions
 
-if [[ ! -f "${FINAL_DIRECTORY}/${TODAY_DATE}.zip" ]]
-then
-    curl --silent ${WEBSITE} -o "${FINAL_DIRECTORY}"/${TODAY_DATE}.zip 
+#if [[ ! -f "${FINAL_DIRECTORY}/${TODAY_DATE}.zip" ]]
+#then
+    #curl --silent ${WEBSITE1} -o "${FINAL_DIRECTORY}"/${TODAY_DATE}.zip 
 
-    # curl "${WEBSITE}/${TODAY_DATE}" -o "${FINAL_DIRECTORY}"/${TODAY_DATE}.zip
-fi
+     curl --silent "${WEBSITE1}" -o "${FINAL_DIRECTORY}"/${FILE_NAME1}-${TIME}.zip
+#fi
 
-if [[ "${DAY}" -eq 2 ]] && [[ ! -f "${FINAL_DIRECTORY}"/${TODAY_DATE}-second.zip ]]
+if [[ "${DAY}" -eq 4 ]] && [[ ! -f "${FINAL_DIRECTORY}"/${FILE_NAME2}zip ]]
 then
-    curl --silent ${WEBSITE} -o "${FINAL_DIRECTORY}"/${TODAY_DATE}-second.zip  
+    curl --silent ${WEBSITE2} -o "${FINAL_DIRECTORY}"/${FILE_NAME2}.zip  
 
     # curl "${WEBSITE}/${TODAY_DATE}" -o "${FINAL_DIRECTORY}"/${TODAY_DATE}.zip
 fi
