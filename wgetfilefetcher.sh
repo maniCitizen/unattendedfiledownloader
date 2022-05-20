@@ -11,6 +11,14 @@ TODAY_DATE=$(date +%Y-%m-%d)
 
 mkdir -p "${DIRECTORY}/${TODAY_DATE}"
 
+# Check if the directory was created successfully
+
+if [[ ! -d "${DIRECTORY}/${TODAY_DATE}" ]]
+then
+    echo -n "Directory could not be created !!!"
+    exit 1
+fi
+
 FINAL_DIRECTORY="${DIRECTORY}/${TODAY_DATE}"
 
 # Get the day of the week and current time
