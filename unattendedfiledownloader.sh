@@ -21,6 +21,10 @@ fi
 
 FINAL_DIRECTORY="${DIRECTORY}/${TODAY_DATE}"
 
+#Create Logfile
+LOGFILE="logfile.txt"
+touch ${LOGFILE}
+
 # Get the day of the week and current time
 
 DAY=$(date +%u)
@@ -35,18 +39,29 @@ WEBSITE1="http://www.pdf995.com/samples/pdf.pdf"
 WEBSITE2="http://www.africau.edu/images/default/sample.pdf"
 
 
+exit_status()
+{
+    if [[ "${?}" -ne 0 ]]
+    then
+        echo $1
+    fi
+}
+
+
 # Fetch the file from the site using certain conditions
 
 #if [[ ! -f "${FINAL_DIRECTORY}/${TODAY_DATE}.zip" ]]
 #then
     #curl --silent ${WEBSITE1} -o "${FINAL_DIRECTORY}"/${TODAY_DATE}.zip 
 
-     curl --silent "${WEBSITE1}" -o "${FINAL_DIRECTORY}"/${FILE_NAME1}-${TIME}.zip
+     curl "${WEBSITE1}" -o "${FINAL_DIRECTORY}"/${FILE_NAME1}-${TIME}.zip3 &>>${LOGFILE}
+     exit_status "${FILE_NAME1} could not be downloaded successfully !!!" &>>${LOGFILE}
 #fi
 
 if [[ "${DAY}" -eq 4 ]] && [[ ! -f "${FINAL_DIRECTORY}"/${FILE_NAME2}zip ]]
 then
-    curl --silent ${WEBSITE2} -o "${FINAL_DIRECTORY}"/${FILE_NAME2}.zip  
+    curl ${WEBSITE2} -o "${FINAL_DIRECTORY}"/${FILE_NAME2}.zip &>>${LOGFILE}
+    exit_status "${FILE_NAME2} could not be downloaded successfully !!!" &>>${LOGFILE}  
 
     # curl "${WEBSITE}/${TODAY_DATE}" -o "${FINAL_DIRECTORY}"/${TODAY_DATE}.zip
 fi
